@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/css/estilos.css">
+    <title>Administrador</title>
+</head>
+<body>
+    <h1>Interfaz de Administrador</h1>
+    <label for="duration">Duración en minutos:</label>
+    <input type="number" id="duration" placeholder="Minutos">
+    <button id="generate-code">Generar código</button>
+    <p id="admin-code-display"></p>
+    <p id="countdown"></p> <!-- Aquí se mostrará el temporizador -->
+    
+    <script>
+        let code = '';
+        let timer;
+
+        document.getElementById('generate-code').addEventListener('click', function() {
+            const duration = document.getElementById('duration').value;
+            if (!duration) {
+                alert('Por favor, ingrese la duración en minutos.');
+                return;
+            }
+
+            code = Math.random().toString(36).substring(2, 8).toUpperCase(); // Genera un código aleatorio de 6 dígitos
+            document.getElementById('admin-code-display').textContent = `Código: ${code} (Expira en ${duration} minutos)`;
+
+            // Guardar el código en localStorage para que esté accesible en user.html
+            localStorage.setItem('generatedCode', code);
+
+             // Establecer la duración del código en minutos y almacenar la hora de expiración
+             const expirationTime = new Date().getTime() + duration * 60000;
+            localStorage.setItem('expirationTime', expirationTime);
+
+            // Limpiar el temporizador anterior y establecer uno nuevo
+            clearTimeout(timer);
+            updateCountdown();  // Iniciar el temporizador visual
+            timer = setInterval(updateCountdown, 1000);  // Actualizar cada segundo
+
+            setTimeout(function() {
+                localStorage.removeItem('generatedCode'); // Eliminar el código después de que expire
+                localStorage.removeItem('expirationTime');
+                document.getElementById('generated-code').textContent = '';
+                document.getElementById('countdown').textContent = 'El código ha expirado.';
+                clearInterval(timer); // Detener la actualización del temporizador
+            }, duration * 60000);
+        });
+
+         // Función para mostrar el temporizador de cuenta regresiva
+         function updateCountdown() {
+            const expirationTime = parseInt(localStorage.getItem('expirationTime'));
+            const now = new Date().getTime();
+            const timeLeft = expirationTime - now;
+
+            if (timeLeft > 0) {
+                const minutes = Math.floor(timeLeft / 60000);
+                const seconds = Math.floor((timeLeft % 60000) / 1000);
+                document.getElementById('countdown').textContent = `Tiempo restante: ${minutes} minutos y ${seconds} segundos`;
+            } else {
+                document.getElementById('countdown').textContent = 'El código ha expirado.';
+                clearInterval(timer);  // Detener el temporizador cuando expira
+            }
+        }
+    </script>
+</body>
+</html>
+
+

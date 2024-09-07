@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 
 <head>
     <meta charset="UTF-8">
@@ -15,53 +15,43 @@
 </head>
 
 <body>
-    <!--Add buttons to initiate auth sequence and sign out-->
-
     <div class="container">
         <h1>Registro de Asistencia
             <img src="assets/img/usuario.png">
         </h1>
-        <form id="registrationForm" action="https://sheetdb.io/api/v1/ilz0wohasjico" method="post">
-            <label for="name">Apellido y Nombre:</label>
-            <input type="text" id="name" placeholder="Apellido y Nombre" name="data[Nombre]" required>
-            <label for="email">Correo electrónico:</label>
-            <input type="email" id="email" placeholder="Correo" name="data[Correo]" required>
-            <label for="dni">DNI:</label>
-            <input type="number" id="dni" placeholder="Dni" name="data[Dni]" required>
 
-            <input type="hidden" id="date" name="data[Fecha y Hora]" readonly>
-            <!--<label for="date">Fecha:</label>
-            <input type="text" id="date" name="date" readonly>
-            <label for="time">Hora:</label>
-            <input type="text" id="time" name="time" readonly>!-->
-            <!-- Campos ocultos para la fecha y hora 
-            <input type="hidden" id="date" name="date">
-            <input type="hidden" id="time" name="time">-->
-            <div>
-                <button type="submit"> Registrar</button>
-            </div>
+    <div id="admin-section">
+        <input type="password" id="admin-password" placeholder="Contraseña de administrador">
+        <input type="datetime-local" id="enable-time">
+        <button onclick="enableForm()">Habilitar Formulario</button>
+    </div>
 
-        </form>
-        <p id="countdown"></p>
-        <table id="attendanceTable">
-            <thead>
-                <tr>
+    <form id="registrationForm" style="display:none;" onsubmit="submitForm(event)" action="https://sheetdb.io/api/v1/ilz0wohasjico" method="post">
+        <label for="name">Nombre y Apellido:</label>
+        <input type="text" id="name" placeholder="Apellido y Nombre" name="data[Nombre]" required>
 
-                </tr>
-            </thead>
-            <tbody id="attendanceData"></tbody>
-        </table>
+        <label for="carrera">Carrera:</label>
+        <input type="text" id="carrera" placeholder="Carrera" name="data[Carrera]" required>
 
+        <label for="commission">Comisión:</label>
+        <input type="text" id="commission" placeholder="Comisión" name="data[Comision]" required>
 
-        <!-- Formulario de administrador -->
-        <div class="admin-section">
-            <h2>Administrador</h2>
-            <form id="adminForm">
-                <label for="adminPassword">Contraseña de administrador:</label>
-                <input type="password" id="adminPassword" name="adminPassword" required>
-                <button type="submit">Habilitar Asistencia</button>
-            </form>
-        </div>
+        <label for="dni">DNI o LU:</label>
+        <input type="text" id="dni" placeholder="Dni o LU" name="data[Dni]" required>
+
+        <input type="hidden" id="date" name="data[Fecha y Hora]" readonly>
+
+        <button type="submit">Enviar</button>
+    </form>
+
+    <div id="user-records" style="display:none;">
+        <h2>Registros Guardados</h2>
+        <div id="records"></div>
+    </div>
+    </div>
+
+ 
+
     </div>
 
     <script>
@@ -82,10 +72,9 @@
         });
     </script>
 
+    <script src="/scritp.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.0/xlsx.full.min.js"></script>
     <script src="https://apis.google.com/js/api.js"></script>
-    <script src="./js/script.js"></script>
-
+    
 </body>
-
 </html>

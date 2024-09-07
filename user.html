@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="css/estilos.css">
+    <link rel="stylesheet" href="ccs/estilos.css">
     <title>Formulario de Usuario</title>
 </head>
 <body>
@@ -84,70 +84,54 @@
            
         };
 
-        document.addEventListener('DOMContentLoaded', function() {
-    const storedCode = localStorage.getItem('generatedCode');
-    const expirationTime = localStorage.getItem('expirationTime');
-    const now = new Date().getTime();
-    const formSubmitted = localStorage.getItem('formSubmitted');
+        document.getElementById('user-code').addEventListener('input', function() {
+            const inputCode = document.getElementById('user-code').value;
+            const storedCode = localStorage.getItem('generatedCode');
 
-    if (storedCode && expirationTime && now < expirationTime) {
-        document.getElementById('code-display').textContent = `Código generado: ${storedCode}`;
-    } else {
-        alert('No hay código disponible o ha expirado.');
-    }
+            if (inputCode === storedCode) {
+                enableForm();
+            } else {
+                disableForm();
+            }
+        });
 
-    if (formSubmitted) {
-        disableForm();
-        alert('El formulario ya ha sido enviado.');
-    }
-
-    document.getElementById('user-code').addEventListener('input', function() {
-        const inputCode = document.getElementById('user-code').value;
-        if (inputCode === storedCode) {
-            enableForm();
-        } else {
-            disableForm();
+        function enableForm() {
+            document.getElementById('name').disabled = false;
+            document.getElementById('career').disabled = false;
+            document.getElementById('commission').disabled = false;
+            document.getElementById('dni').disabled = false;
+            document.getElementById('submit-btn').disabled = false;
         }
-    });
 
-    document.getElementById('user-form').addEventListener('submit', function(e) {
-        e.preventDefault();
+        function disableForm() {
+            document.getElementById('name').disabled = true;
+            document.getElementById('career').disabled = true;
+            document.getElementById('commission').disabled = true;
+            document.getElementById('dni').disabled = true;
+            document.getElementById('submit-btn').disabled = true;
+            document.getElementById('user-code').disabled = true;
 
-        const name = document.getElementById('name').value;
-        const career = document.getElementById('career').value;
-        const commission = document.getElementById('commission').value;
-        const dni = document.getElementById('dni').value;
+        }
 
-        const table = document.getElementById('user-data').getElementsByTagName('tbody')[0];
-        const newRow = table.insertRow();
-        newRow.insertCell(0).appendChild(document.createTextNode(name));
-        newRow.insertCell(1).appendChild(document.createTextNode(career));
-        newRow.insertCell(2).appendChild(document.createTextNode(commission));
-        newRow.insertCell(3).appendChild(document.createTextNode(dni));
+        document.getElementById('user-form').addEventListener('submit', function(e) {
+            e.preventDefault();
 
-        alert('Datos enviados y formulario deshabilitado.');
-        localStorage.setItem('formSubmitted', 'true');
-        disableForm();
-    });
+            const name = document.getElementById('name').value;
+            const career = document.getElementById('career').value;
+            const commission = document.getElementById('commission').value;
+            const dni = document.getElementById('dni').value;
 
-    function enableForm() {
-        document.getElementById('name').disabled = false;
-        document.getElementById('career').disabled = false;
-        document.getElementById('commission').disabled = false;
-        document.getElementById('dni').disabled = false;
-        document.getElementById('submit-btn').disabled = false;
-    }
-
-    function disableForm() {
-        document.getElementById('name').disabled = true;
-        document.getElementById('career').disabled = true;
-        document.getElementById('commission').disabled = true;
-        document.getElementById('dni').disabled = true;
-        document.getElementById('submit-btn').disabled = true;
-        document.getElementById('user-code').disabled = true;
-    }
-});
-
+            const table = document.getElementById('user-data').getElementsByTagName('tbody')[0];
+            const newRow = table.insertRow();
+            newRow.insertCell(0).appendChild(document.createTextNode(name));
+            newRow.insertCell(1).appendChild(document.createTextNode(career));
+            newRow.insertCell(2).appendChild(document.createTextNode(commission));
+            newRow.insertCell(3).appendChild(document.createTextNode(dni));
+            alert('Datos enviados y formulario deshabilitado.');
+            
+        });
+        
+       
     </script>
 </body>
 </html>

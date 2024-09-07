@@ -38,11 +38,6 @@ button {
   margin-top: 10px;
 }
 
-button:disabled {
-  background-color: #ccc;
-  cursor: not-allowed;
-}
-
 table {
   border: #f30000 5px solid;
   border-collapse:collapse;

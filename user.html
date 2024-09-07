@@ -8,56 +8,40 @@
 </head>
 <body>
     <h1>Formulario de Usuario</h1>
-    <p id="countdown"></p> <!-- Aquí se mostrará el temporizador -->
-    
-    <form id="user-form">
-        
-        <label for="user-code">Ingresa el código:</label>
-        <input type="text" id="user-code" placeholder="Código de 6 dígitos" required>
-        <p id="code-display"></p> <!-- Mostrar el código generado aquí -->
-        <p id="countdown"></p> <!-- Aquí se mostrará el temporizador -->
-        
-        <label for="name">Nombre:</label>
-        <input type="text" id="name" placeholder="Tu nombre" required disabled>
-        
-        <label for="career">Carrera:</label>
-        <input type="text" id="career" placeholder="Tu carrera" required disabled>
-        
-        <label for="commission">Comisión:</label>
-        <input type="text" id="commission" placeholder="Tu comisión" required disabled>
-        
-        <label for="dni">DNI:</label>
-        <input type="number" id="dni" placeholder="Tu DNI" required disabled>
-        
-        <button type="submit" id="submit-btn" disabled>Enviar</button>
-    </form>
-    
+    <p>Ingrese el código proporcionado por el administrador:</p>
+    <input type="text" id="user-code" placeholder="Código de acceso">
+    <p id="code-display"></p> <!-- Aquí se mostrará el código -->
 
-    <table id="user-data">
-        <thead>
-            <tr>
-                <th>Nombre</th>
-                <th>Carrera</th>
-                <th>Comisión</th>
-                <th>DNI</th>
-            </tr>
-        </thead>
-        <tbody></tbody>
-    </table>
+    <form id="user-form">
+        <input type="text" id="name" placeholder="Nombre" required><br>
+        <input type="text" id="career" placeholder="Carrera" required><br>
+        <input type="text" id="commission" placeholder="Comisión" required><br>
+        <input type="text" id="dni" placeholder="DNI" required><br>
+        <button type="submit">Enviar</button>
+    </form>
+
+    <p id="countdown"></p> <!-- Aquí se mostrará el temporizador -->
 
     <script>
         let timer;
-        let code = '';
 
-        window.onload = function() {
+        // Función para obtener el código generado desde el servidor
+        function fetchCode() {
+            fetch('http://localhost:3000/get-code')
+            .then(response => response.json())
+            .then(data => {
+                if (data.code) {
+                    document.getElementById('code-display').textContent = `Código: ${data.code}`;
+                    updateCountdown(data.expirationTime);
+                } else {
+                    document.getElementById('code-display').textContent = 'El código ha expirado.';
+                }
+            })
+            .catch(error => console.error('Error:', error));
+        }
 
-            // Limpiar el temporizador anterior y establecer uno nuevo
-            clearTimeout(timer);
-            updateCountdown();  // Iniciar el temporizador visual
-            timer = setInterval(updateCountdown, 1000);  // Actualizar cada segundo
-             // Función para mostrar el temporizador de cuenta regresiva
-         function updateCountdown() {
-            const expirationTime = parseInt(localStorage.getItem('expirationTime'));
+        // Función para mostrar el temporizador de cuenta regresiva
+        function updateCountdown(expirationTime) {
             const now = new Date().getTime();
             const timeLeft = expirationTime - now;
 
@@ -65,73 +49,17 @@
                 const minutes = Math.floor(timeLeft / 60000);
                 const seconds = Math.floor((timeLeft % 60000) / 1000);
                 document.getElementById('countdown').textContent = `Tiempo restante: ${minutes} minutos y ${seconds} segundos`;
+                timer = setTimeout(() => updateCountdown(expirationTime), 1000);
             } else {
                 document.getElementById('countdown').textContent = 'El código ha expirado.';
-                clearInterval(timer);  // Detener el temporizador cuando expira
+                clearTimeout(timer);  // Detener el temporizador cuando expira
+                document.getElementById('user-form').style.display = 'none'; // Deshabilitar el formulario
             }
         }
 
-            // Recuperar el código almacenado y el tiempo de expiración
-            const storedCode = localStorage.getItem('generatedCode');
-            const expirationTime = localStorage.getItem('expirationTime');
-            const now = new Date().getTime();
-
-            if (storedCode && expirationTime && now < expirationTime) {
-                document.getElementById('code-display').textContent = `Código generado: ${storedCode}`;
-            } else {
-                alert('No hay código disponible o ha expirado.');
-            }
-           
-        };
-
-        document.getElementById('user-code').addEventListener('input', function() {
-            const inputCode = document.getElementById('user-code').value;
-            const storedCode = localStorage.getItem('generatedCode');
-
-            if (inputCode === storedCode) {
-                enableForm();
-            } else {
-                disableForm();
-            }
+        document.addEventListener('DOMContentLoaded', function() {
+            fetchCode();
         });
-
-        function enableForm() {
-            document.getElementById('name').disabled = false;
-            document.getElementById('career').disabled = false;
-            document.getElementById('commission').disabled = false;
-            document.getElementById('dni').disabled = false;
-            document.getElementById('submit-btn').disabled = false;
-        }
-
-        function disableForm() {
-            document.getElementById('name').disabled = true;
-            document.getElementById('career').disabled = true;
-            document.getElementById('commission').disabled = true;
-            document.getElementById('dni').disabled = true;
-            document.getElementById('submit-btn').disabled = true;
-            document.getElementById('user-code').disabled = true;
-
-        }
-
-        document.getElementById('user-form').addEventListener('submit', function(e) {
-            e.preventDefault();
-
-            const name = document.getElementById('name').value;
-            const career = document.getElementById('career').value;
-            const commission = document.getElementById('commission').value;
-            const dni = document.getElementById('dni').value;
-
-            const table = document.getElementById('user-data').getElementsByTagName('tbody')[0];
-            const newRow = table.insertRow();
-            newRow.insertCell(0).appendChild(document.createTextNode(name));
-            newRow.insertCell(1).appendChild(document.createTextNode(career));
-            newRow.insertCell(2).appendChild(document.createTextNode(commission));
-            newRow.insertCell(3).appendChild(document.createTextNode(dni));
-            alert('Datos enviados y formulario deshabilitado.');
-            
-        });
-        
-       
     </script>
 </body>
 </html>

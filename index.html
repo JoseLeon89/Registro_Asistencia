@@ -24,10 +24,18 @@
         <form id="registrationForm" action="https://sheetdb.io/api/v1/ilz0wohasjico" method="post">
             <label for="name">Apellido y Nombre:</label>
             <input type="text" id="name" placeholder="Apellido y Nombre" name="data[Nombre]" required>
-            <label for="email">Correo electrónico:</label>
-            <input type="email" id="email" placeholder="Correo" name="data[Correo]" required>
-            <label for="dni">DNI:</label>
-            <input type="number" id="dni" placeholder="Dni" name="data[Dni]" required>
+
+            <label for="carrera">Carrera:</label>
+            <input type="text" id="carrera" placeholder="Carrera" name="data[Carrera]" required>
+
+            <label for="comision">Comisión:</label>
+            <input type="text" id="comision" placeholder="Comisión" name="data[Comision]" required>
+
+            <!--<label for="email">Correo electrónico:</label>
+            <input type="email" id="email" placeholder="Correo" name="data[Correo]" required>-->
+
+            <label for="dni">Lu o Dni:</label>
+            <input type="text" id="dni" placeholder="Lu o Dni" name="data[Dni]" required>
 
             <input type="hidden" id="date" name="data[Fecha y Hora]" readonly>
             <!--<label for="date">Fecha:</label>

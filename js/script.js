@@ -113,38 +113,5 @@ document.addEventListener('DOMContentLoaded', function() {
     });
   }
 
-  /*function sendDataToGoogleSheets(data) {
-    const CLIENT_ID = '605654995521-f9i5hm6hdr3a8v84buovmu0mhnicuq7a.apps.googleusercontent.com'; // Reemplazar con tu Client ID -- 605654995521-f9i5hm6hdr3a8v84buovmu0mhnicuq7a.apps.googleusercontent.com
-    const API_KEY = 'AIzaSyBe4VwkRxXlEU_-7csJZlDR8LJSS6Lx-c8'; // Reemplazar con tu API Key -- AIzaSyBe4VwkRxXlEU_-7csJZlDR8LJSS6Lx-c8
-    const SPREADSHEET_ID = '11C_ceKA-nH7wpynVdzuLt14Ek_VEG2ruaudM86Gc03Y'; // Reemplazar con tu ID de hoja de cálculo
-
-    gapi.client.init({
-      'apiKey': API_KEY,
-      'clientId': CLIENT_ID,
-      'discoveryDocs': ['https://sheets.googleapis.com/$discovery/rest?version=v4'],
-      'scope': 'https://www.googleapis.com/auth/spreadsheets'
-    }).then(function() {
-      return gapi.client.sheets.spreadsheets.values.append({
-        spreadsheetId: SPREADSHEET_ID,
-        range: 'Sheet1!A2', // Cambiar Sheet1 por el nombre de tu hoja y A1 por la celda donde quieres empezar a escribir
-        valueInputOption: 'USER_ENTERED',
-        resource: {
-          values: [[
-            data.name,
-            data.email,
-            data.dni,
-            data.date,
-            data.time
-          ]]
-        }
-      });
-    }).then(function(response) {
-      console.log('Datos enviados a Google Sheets:', response);
-      if (!spreadsheetId) {
-        spreadsheetId = response.result.spreadsheetId;
-      }
-    });
-  }*/
-
 });
 

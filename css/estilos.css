@@ -1,85 +1,71 @@
 body {
   font-family: Arial, sans-serif;
-  margin: 0;
+}
+
+.container{
+  max-width: 850px;
+  margin: 50px auto;
   padding: 20px;
-  background-color: #f4f4f4;
+  border: 1px solid #ccc;
+  border-radius: 5px;
 }
 
-h1, h2 {
-  text-align: center;
-}
-
-#admin-section, #user-section {
+form {
   margin-bottom: 20px;
 }
 
 label {
   display: block;
-  margin-bottom: 8px;
+  margin-bottom: 5px;
 }
 
-input {
-  margin-bottom: 10px;
-  padding: 8px;
+input[type="text"],
+input[type="email"] {
   width: 100%;
+  padding: 8px;
+  margin-bottom: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
 }
 
 button {
-  padding: 10px;
-  background-color: #28a745;
+  padding: 10px 20px;
+  background-color: #4CAF50;
   color: white;
   border: none;
+  border-radius: 4px;
   cursor: pointer;
+  margin-top: 10px;
 }
 
 button:disabled {
-  background-color: gray;
+  background-color: #ccc;
   cursor: not-allowed;
 }
 
 table {
-  width: 100%;
-  border-collapse: collapse;
-  margin-top: 20px;
+  border: #f30000 5px solid;
+  border-collapse:collapse;
 }
-
-table, th, td {
-  border: 1px solid #ccc;
+thead, tr, th, td {
+  border: black 1px solid;
+  padding:5px;
 }
+ img {
+  width: 100px; 
+  height: 100px;
+ }
 
-th, td {
-  padding: 10px;
-  text-align: left;
-}
+ /* pagina dos */
 
-/*Login*/
-.login-container {
-  background-color: #fff;
-  padding: 20px;
-  border-radius: 8px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-  width: 300px;
+ .titulo {
+  padding-top: 20px;
   text-align: center;
-}
-
-input {
-  width: 100%;
-  padding: 10px;
-  margin: 10px 0;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-}
-
-button {
-  width: 100%;
-  padding: 10px;
-  background-color: #007BFF;
-  color: #fff;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-}
-
-button:hover {
-  background-color: #0056b3;
+ }
+ .tarjeta {
+  
+  max-width: 890px;
+  margin: 10px auto;
+  padding: 20px;
+  border-radius: 5px;
 }
